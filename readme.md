@@ -18,7 +18,7 @@ If you don't want that messages are sent to any contact person, then restrict th
 
 ## How to protect a contact form from advertising
 
-You can protect your contact form from advertising, spam and unwanted messages. The most important protection mechanisms are activated by default. Further protection mechanisms can be activated if necessary. Open file `system/extensions/yellow-system.ini` and change `ContactLinkProtection: 1`. Messages must then no longer contain clickable links, this blocks many unwanted messages, but allows normal messages to pass through. You can also configure keywords in the spam filter, fortunately, many spammers send the same message multiple times. For custom protection mechanisms there's an [API for developers](https://datenstrom.se/yellow/help/api-for-developers).
+You can protect your contact form from advertising, spam and unwanted messages. The most important protection mechanisms are activated by default. Further protection mechanisms can be activated if necessary. Open file `system/extensions/yellow-system.ini` and change `ContactLinkProtection: 1`. Messages must then no longer contain clickable links, this blocks many unwanted messages, but allows normal messages to pass through. The contact form also includes a hidden URL honeypot by default: submissions with a value in that field are silently discarded and shown the normal success message. You can disable it with `ContactHoneypotProtection: 0`. You can also configure keywords in the spam filter, fortunately, many spammers send the same message multiple times. For custom protection mechanisms there's an [API for developers](https://datenstrom.se/yellow/help/api-for-developers).
 
 ## Examples
 
@@ -99,6 +99,7 @@ The following settings can be configured in file `system/extensions/yellow-syste
 `ContactLinkProtection` = enable protection against clickable links, 1 or 0  
 `ContactTimerProtection` = enable protection against sending quickly, 1 or 0  
 `ContactBotProtection` = enable protection against bad bots, 1 or 0  
+`ContactHoneypotProtection` = enable the hidden URL honeypot, 1 or 0 (default: 1)  
 `ContactSpamFilter` = spam filter as regular expression, `none` to disable  
 
 The following files can be customised:

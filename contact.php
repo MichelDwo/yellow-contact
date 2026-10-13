@@ -13,6 +13,7 @@ class YellowContact {
         $this->yellow->system->setDefault("contactLinkProtection", "0");
         $this->yellow->system->setDefault("contactTimerProtection", "1");
         $this->yellow->system->setDefault("contactBotProtection", "1");
+        $this->yellow->system->setDefault("contactHoneypotProtection", "1");
         $this->yellow->system->setDefault("contactSpamFilter", "advert|promot|market|click here");
     }
     
@@ -72,9 +73,11 @@ class YellowContact {
         $referer = trim($page->getRequest("referer"));
         $timer = trim($page->getRequest("timer"));
         $token = trim($page->getRequest("token"));
+        $honeypot = trim($page->getRequest("url"));
         $userName = $this->getUserName($page);
         $userEmail = $this->getUserEmail($page);
         if (!$this->checkBrowserToken($token)) { $status = "bot"; $page->error(444); }
+        if ($status=="ok" && $this->yellow->system->get("contactHoneypotProtection") && !is_string_empty($honeypot)) $status = "done";
         if ($status=="ok" && (is_string_empty($senderName) || is_string_empty($senderEmail) || is_string_empty($message) || is_string_empty($consent))) $status = "incomplete";
         if ($status=="ok" && !filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) $status = "invalid";
         if ($status=="ok" && !$this->checkTimerProtection($timer)) $status = "incomplete";
